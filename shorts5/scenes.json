@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "image": "images/woman-checking-bill.jpg",
+    "caption": "이번 달 전기요금\n{{또 올랐다고}}?",
+    "narration_clauses": [
+      ["여름철 전기요금 고지서 보고 깜짝 놀라신 분들 많으시죠.", true],
+      ["근데 7월 8월만 적용되는 특별 혜택이 있어요.", true]
+    ],
+    "zoom": "in"
+  },
+  {
+    "id": 2,
+    "image": "images/ac-remote-hand.jpg",
+    "caption": "누진구간\n{{200에서 300으로}} 확대",
+    "narration_clauses": [
+      ["7월 8월 두 달만 누진 1단계가 200킬로와트에서 300킬로와트로, 2단계는 400에서 450으로 넓어져요.", true],
+      ["평소보다 더 써도 낮은 단가 구간을 유지할 수 있어요.", false]
+    ],
+    "zoom": "out"
+  },
+  {
+    "id": 3,
+    "image": "images/woman-smartphone-desk.jpg",
+    "caption": "덜 쓰면\n{{캐시백}}까지 받아요",
+    "narration_clauses": [
+      ["작년 같은 달보다 전기를 1% 이상 아끼면 한전 에너지캐시백 대상이에요.", true],
+      ["현금이 아니라 다음 달 요금에서 자동으로 차감돼요.", false]
+    ],
+    "zoom": "in"
+  },
+  {
+    "id": 4,
+    "image": "images/woman-electric-fan.jpg",
+    "caption": "에어컨 26~28도\n{{서큘레이터}} 같이 쓰기",
+    "narration_clauses": [
+      ["에어컨은 26도에서 28도로 맞추고 서큘레이터를 같이 쓰면 체감 냉방력은 유지하면서 전기는 아낄 수 있어요.", true],
+      ["세탁기나 건조기는 야간에 몰아서 쓰는 것도 도움이 돼요.", false]
+    ],
+    "zoom": "out"
+  },
+  {
+    "id": 5,
+    "image": "images/woman-checking-bill.jpg",
+    "caption": "캐시백 신청은\n{{지금 바로}} 하세요",
+    "narration_clauses": [
+      ["한전 에너지캐시백은 신청 한 번만 해두면 매달 자동으로 비교해줘요.", true],
+      ["지금 바로 신청해두고 이번 여름 전기요금 폭탄 피해보세요!", true]
+    ],
+    "zoom": "in"
+  }
+]

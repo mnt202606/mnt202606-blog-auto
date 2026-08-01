@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "image": "../images/man-ac-remote-sofa-7267527.jpg",
+    "caption": "냉방병 주의보\n{{전기세 폭탄}}까지?",
+    "narration_clauses": [
+      ["요즘 에어컨 없이 못 사는데,", false],
+      ["전기세 폭탄에 냉방병까지 걱정되시죠?", true],
+      ["이 영상 하나로 둘 다 해결해드릴게요.", false]
+    ],
+    "zoom": "in"
+  },
+  {
+    "id": 2,
+    "image": "../images/woman-headache-19005.jpg",
+    "caption": "몸살인데 열은 없다?\n그거 {{감기 아니에요}}",
+    "narration_clauses": [
+      ["으슬으슬 춥고 두통에 콧물까지,", false],
+      ["근데 열은 없다?", true],
+      ["그거 감기 아니라 냉방병일 확률 높아요.", true]
+    ],
+    "zoom": "out"
+  },
+  {
+    "id": 3,
+    "image": "../images/woman-window-reading-4465904.jpg",
+    "caption": "{{1도의 기적}}\n26~28도, 전기세 {{7%}} 뚝",
+    "narration_clauses": [
+      ["정답은 딱 하나, 온도예요.", true],
+      ["실내외 온도차는 5도 이내, 26도에서 28도를 유지하세요.", false],
+      ["1도만 올려도 전기세가 약 7% 절약돼요.", true]
+    ],
+    "zoom": "in"
+  },
+  {
+    "id": 4,
+    "image": "../images/man-drinking-water-937384.jpg",
+    "caption": "{\\fs92}[[지켜야 할 습관 3가지]]{\\fs66}\n{{1}} 미지근한 물 자주 마시기\n{{2}} 2시간마다 환기하기\n{{3}} 필터 2주마다 청소하기",
+    "narration_clauses": [
+      ["미지근한 물 자주 마시기, 두 시간마다 환기하기, 필터 2주에 한 번 청소하기.", false],
+      ["이 세 가지만 지켜도 냉방병 걱정 끝이에요.", true]
+    ],
+    "zoom": "out",
+    "fontsize": 66,
+    "margin_v": 300
+  },
+  {
+    "id": 5,
+    "image": "../images/man-ac-remote-sofa-7267527.jpg",
+    "caption": "지금 바로\n{{1~2도}}만 올려보세요",
+    "narration_clauses": [
+      ["지금 바로 온도 1도에서 2도만 올려보세요.", true],
+      ["저장해두고 이번 여름 내내 활용해보세요!", false]
+    ],
+    "zoom": "in"
+  }
+]

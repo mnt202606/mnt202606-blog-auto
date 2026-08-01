@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "image": "images/money1.jpg",
+    "caption": "아직 못 쓴\n{{지원금}} 있나요?",
+    "narration_clauses": [
+      ["아직 못 쓴 지원금 있으신가요?", true],
+      ["고유가 피해지원금, 3차 민생지원금이에요.", false]
+    ],
+    "zoom": "in"
+  },
+  {
+    "id": 2,
+    "image": "images/calendar.jpg",
+    "caption": "사용기한 {{8월 31일}}까지\n넘기면 그냥 소멸돼요",
+    "narration_clauses": [
+      ["사용기한은 8월 31일까지예요.", true],
+      ["기한 내 안 쓰면 남은 잔액은 그냥 소멸됩니다.", true]
+    ],
+    "zoom": "out"
+  },
+  {
+    "id": 3,
+    "image": "images/creditcard.jpg",
+    "caption": "1인당 {{10만~60만원}}\n카드로 바로 사용 가능",
+    "narration_clauses": [
+      ["지급액은 1인당 10만원에서 60만원, 소득과 지역별로 달라요.", false],
+      ["신용카드, 체크카드, 지역화폐, 온라인포인트로 바로 쓸 수 있어요.", true]
+    ],
+    "zoom": "in"
+  },
+  {
+    "id": 4,
+    "image": "images/money3.jpg",
+    "caption": "{{4차 지원금}}은?\n아직 전국 발표 없음",
+    "narration_clauses": [
+      ["전국민 대상 4차 지원금은 아직 정부 공식 발표가 없어요.", true],
+      ["다만 지자체별로 자체 지원금을 따로 주는 곳도 있어요. 예를 들어 강원 속초시는 1인당 20만원을 줘요.", false]
+    ],
+    "zoom": "out"
+  },
+  {
+    "id": 5,
+    "image": "images/phone_banking2.jpg",
+    "caption": "지금 바로\n{{잔액}} 확인해보세요",
+    "narration_clauses": [
+      ["받으신 분들은 잔액부터 꼭 확인해보세요.", true],
+      ["우리 동네 시청, 구청 홈페이지도 검색해보시고요!", false]
+    ],
+    "zoom": "in"
+  }
+]

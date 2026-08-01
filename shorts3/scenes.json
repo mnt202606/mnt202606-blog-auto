@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "image": "images/thermo.jpg",
+    "caption": "폭염 주의보\n체감 {{35도}} 넘었어요",
+    "narration_clauses": [
+      ["오늘 낮 기온이 39도까지 올라가고, 체감온도는 35도를 넘는대요.", true],
+      ["이 정도면 진짜 위험한 폭염이에요.", true]
+    ],
+    "zoom": "in"
+  },
+  {
+    "id": 2,
+    "image": "images/sweat_man.jpg",
+    "caption": "어지럽고 두통 있다면\n{{온열질환}} 신호예요",
+    "narration_clauses": [
+      ["어지럽고 두통이 심하거나, 근육에 쥐가 나고 속이 메스껍다면", false],
+      ["열사병 같은 온열질환 신호일 수 있어요.", true]
+    ],
+    "zoom": "out"
+  },
+  {
+    "id": 3,
+    "image": "images/parasol.jpg",
+    "caption": "한낮 야외활동은\n{{무조건 피하세요}}",
+    "narration_clauses": [
+      ["낮 12시부터 오후 5시 사이엔 야외활동을 최대한 피하고,", true],
+      ["그늘이나 시원한 실내에서 쉬어주세요.", false]
+    ],
+    "zoom": "in"
+  },
+  {
+    "id": 4,
+    "image": "images/thirsty.jpg",
+    "caption": "물은 {{목마르기 전에}}\n미리미리 마셔주세요",
+    "narration_clauses": [
+      ["목마르지 않아도 물을 자주 마셔주시고,", false],
+      ["카페인이나 술은 탈수를 심하게 하니까 피하는 게 좋아요.", true]
+    ],
+    "zoom": "out"
+  },
+  {
+    "id": 5,
+    "image": "images/thermo.jpg",
+    "caption": "의식이 흐려지면\n바로 {{119}} 신고하세요",
+    "narration_clauses": [
+      ["의식이 흐려지거나 상태가 심각해 보이면 바로 119에 신고하고,", true],
+      ["시원한 곳으로 옮겨서 몸을 식혀주세요. 오늘 특히 조심하세요!", false]
+    ],
+    "zoom": "in"
+  }
+]

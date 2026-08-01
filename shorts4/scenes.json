@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "image": "images/typhoon-airplane-storm.jpg",
+    "caption": "8월에 태풍 온다는데\n{{항공권}} 어떡하지?",
+    "narration_clauses": [
+      ["13호 태풍 돌핀이 북상 중이에요. 8월에 여행 계획 있으신 분들, 항공권 어떻게 되는지 걱정되시죠.", true],
+      ["결항되면 환불은 얼마나 될까요?", true]
+    ],
+    "zoom": "in"
+  },
+  {
+    "id": 2,
+    "image": "images/flight-cancelled-board.jpg",
+    "caption": "항공사 사정으로 결항되면\n{{100% 전액 환불}}",
+    "narration_clauses": [
+      ["항공사 사정으로 결항되면 취소 수수료 없이 100% 전액 환불받을 수 있어요.", true],
+      ["대체편을 제공받거나 미사용분을 환불받으면 돼요.", false]
+    ],
+    "zoom": "out"
+  },
+  {
+    "id": 3,
+    "image": "images/woman-worried-call.jpg",
+    "caption": "결항 발표 전에\n{{내가 먼저 취소}}하면 위약금!",
+    "narration_clauses": [
+      ["그런데 항공사가 결항을 발표하기 전에 내가 먼저 취소하면 위약금이 발생해요.", true],
+      ["꼭 항공사 공식 결항 공지가 뜬 다음에 취소하세요.", false]
+    ],
+    "zoom": "in"
+  },
+  {
+    "id": 4,
+    "image": "images/packing-suitcase.jpg",
+    "caption": "여행자보험 {{특약}}도\n미리 확인하세요",
+    "narration_clauses": [
+      ["여행자보험에 가입하셨다면 결항 시 추가 보상 받을 수 있는 특약이 있는지 미리 확인해두세요.", true],
+      ["항공사마다 취소면제조건도 다르니까 예약한 곳에 미리 물어보는 게 좋아요.", false]
+    ],
+    "zoom": "out"
+  },
+  {
+    "id": 5,
+    "image": "images/woman-airport-waiting.jpg",
+    "caption": "출발 전날\n{{항공사 공지}} 꼭 확인하세요",
+    "narration_clauses": [
+      ["출발 전날엔 꼭 항공사 공지를 확인하시고, 결항 공지가 뜨면 그때 취소나 환불을 신청하세요.", true],
+      ["미리 알아두면 태풍 소식에도 당황할 일 없어요!", true]
+    ],
+    "zoom": "in"
+  }
+]
