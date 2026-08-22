@@ -90,13 +90,24 @@ function loadDraftTitles() {
   return drafts;
 }
 
+// Check if a title is valid (not corrupted).
+// A valid title: exists, is a non-empty string, has no newlines, and is <= 120 chars.
+function isValidTitle(title) {
+  if (!title || typeof title !== 'string') return false;
+  if (title.length === 0) return false;
+  if (title.includes('\n')) return false;
+  if (title.length > 120) return false;
+  return true;
+}
+
 async function main() {
   const drafts = loadDraftTitles();
   const live = await fetchLivePosts();
   const existing = fs.existsSync(OUT_FILE) ? JSON.parse(fs.readFileSync(OUT_FILE, 'utf-8')) : {};
 
   for (const [topic, draftTitle] of Object.entries(drafts)) {
-    if (existing[topic]) continue; // already matched previously, don't re-match
+    // Skip only if existing entry has a valid title; re-match if corrupted or missing
+    if (existing[topic] && isValidTitle(existing[topic].title)) continue;
     const draftTokens = tokenize(draftTitle);
     let best = null;
     for (const p of live) {
