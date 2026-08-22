@@ -38,11 +38,30 @@ async function fetchLivePosts() {
 
   const posts = await page.evaluate(() => {
     const out = [];
-    document.querySelectorAll('a[href*="/PostView"], a[href*="/" ]').forEach((a) => {
+    // Tighten selector: only target post links with /PostView (specific to Naver posts)
+    // Skip the overly broad 'a[href*="/"]' from original
+    document.querySelectorAll('a[href*="/PostView"]').forEach((a) => {
       const href = a.getAttribute('href') || '';
-      const m = href.match(/logNo=(\d+)/) || href.match(/\/(\d{6,})(?:$|[/?])/);
+      const m = href.match(/logNo=(\d+)/);
       if (!m) return;
-      const title = (a.innerText || '').trim();
+
+      // Extract title from text_area child element, not from entire anchor
+      let title = '';
+      const textArea = a.querySelector('[class*="text_area"]');
+      if (textArea) {
+        title = (textArea.innerText || '').trim();
+      }
+      // Fallback to anchor text if text_area not found
+      if (!title) {
+        title = (a.innerText || '').trim();
+      }
+
+      // If title is implausibly long (over 120 chars), likely contains body text
+      // Split on newline and take first line only (title is always first line on Naver)
+      if (title.length > 120) {
+        title = title.split('\n')[0].trim();
+      }
+
       if (!title || title.length < 4) return;
       out.push({ title, logNo: m[1] });
     });
