@@ -18,3 +18,6 @@ node_modules/
 # scratch/debug
 **/debug_*.js
 **/explore*.js
+
+# scraped third-party blog content (internal diagnosis only, not ours to publish)
+naver_autowrite/rank_monitor/fixes/

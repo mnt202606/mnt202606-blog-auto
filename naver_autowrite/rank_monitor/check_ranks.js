@@ -2,6 +2,14 @@ const { chromium } = require('playwright-core');
 const path = require('path');
 const fs = require('fs');
 
+// Returns today's date as YYYY-MM-DD in KST (UTC+9), not the system/UTC date -
+// this project's daily routine runs around 8am KST, which is still "yesterday"
+// in UTC, so a plain toISOString() would silently misdate every morning run.
+function todayKST() {
+  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
+  return kst.toISOString().slice(0, 10);
+}
+
 const HISTORY_FILE = path.join(__dirname, 'rank_history.json');
 const KEYWORDS_FILE = path.join(__dirname, 'keywords.json');
 const PUBLISHED_FILE = path.join(__dirname, 'published_posts.json');
@@ -42,7 +50,7 @@ async function checkAllRanks() {
   const context = await browser.newContext({ viewport: { width: 420, height: 900 }, userAgent: MOBILE_UA });
   const page = await context.newPage();
 
-  const today = new Date().toISOString().slice(0, 10);
+  const today = todayKST();
   history[today] = history[today] || {};
 
   for (const [keyword, info] of Object.entries(keywords)) {
@@ -76,6 +84,7 @@ async function checkAllRanks() {
       if (entry) { priorRank = entry.rank; break; }
     }
     if (priorRank === null) continue; // no prior data, nothing to compare
+    if (!keywords[keyword]) continue; // keyword pruned from keywords.json since being recorded
     const todayRank = todayEntry.rank;
     const gotWorse = todayRank !== null && todayRank > priorRank;
     if (gotWorse) {

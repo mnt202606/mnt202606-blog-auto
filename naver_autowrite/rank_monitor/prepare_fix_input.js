@@ -2,6 +2,14 @@ const { chromium } = require('playwright-core');
 const path = require('path');
 const fs = require('fs');
 
+// Returns today's date as YYYY-MM-DD in KST (UTC+9), not the system/UTC date -
+// this project's daily routine runs around 8am KST, which is still "yesterday"
+// in UTC, so a plain toISOString() would silently misdate every morning run.
+function todayKST() {
+  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
+  return kst.toISOString().slice(0, 10);
+}
+
 const PUBLISHED_FILE = path.join(__dirname, 'published_posts.json');
 const FIXES_DIR = path.join(__dirname, 'fixes');
 const MOBILE_UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1';
@@ -44,7 +52,7 @@ async function prepareFixInputs(drops) {
   if (drops.length === 0) return [];
   fs.mkdirSync(FIXES_DIR, { recursive: true });
   const published = JSON.parse(fs.readFileSync(PUBLISHED_FILE, 'utf-8'));
-  const today = new Date().toISOString().slice(0, 10);
+  const today = todayKST();
 
   const browser = await chromium.launch({
     headless: true,
@@ -54,41 +62,56 @@ async function prepareFixInputs(drops) {
   const page = await context.newPage();
 
   const writtenFiles = [];
-  for (const drop of drops) {
-    const post = published[drop.topic];
-    if (!post) continue;
-    const mine = await readPost(page, post.url, true);
-    const rivalUrls = (await topResultUrls(page, drop.keyword, 4)).filter((u) => !u.includes(`/${post.logNo}`)).slice(0, 3);
-    const rivals = [];
-    for (const url of rivalUrls) {
-      await page.waitForTimeout(1200);
+  try {
+    for (const drop of drops) {
       try {
-        rivals.push({ url, ...(await readPost(page, url, false)) });
+        const post = published[drop.topic];
+        if (!post) continue;
+
+        let mine;
+        try {
+          mine = await readPost(page, post.url, true);
+        } catch (e) {
+          console.log(`skipping ${drop.keyword}: failed to read own post (${e.message.slice(0, 60)})`);
+          continue;
+        }
+
+        const rivalUrls = (await topResultUrls(page, drop.keyword, 4)).filter((u) => !u.includes(`/${post.logNo}`)).slice(0, 3);
+        const rivals = [];
+        for (const url of rivalUrls) {
+          await page.waitForTimeout(1200);
+          try {
+            rivals.push({ url, ...(await readPost(page, url, false)) });
+          } catch (e) {
+            console.log(`  rival read failed (${url}): ${e.message.slice(0, 60)}`);
+          }
+        }
+
+        const lines = [
+          `# 순위 하락 진단 자료`,
+          `키워드: "${drop.keyword}" (${drop.from}위 -> ${drop.to === null ? '권외' : drop.to + '위'})`,
+          `내 글: ${post.url}`,
+          ``,
+          `## 내 글 전문`,
+          `제목: ${mine.title}`,
+          ``,
+          mine.body,
+          ``,
+          `## 현재 상위 경쟁글`,
+          ...rivals.map((r, i) => `\n### ${i + 1}위 후보: ${r.title}\n${r.url}\n${r.body}`),
+        ];
+        const outPath = path.join(FIXES_DIR, `input_${drop.keyword.replace(/\s+/g, '_')}_${today}.md`);
+        fs.writeFileSync(outPath, lines.join('\n'), 'utf-8');
+        console.log(`wrote ${outPath}`);
+        writtenFiles.push(outPath);
       } catch (e) {
-        console.log(`  rival read failed (${url}): ${e.message.slice(0, 60)}`);
+        console.log(`skipping ${drop.keyword}: unexpected error (${e.message.slice(0, 60)})`);
+        continue;
       }
     }
-
-    const lines = [
-      `# 순위 하락 진단 자료`,
-      `키워드: "${drop.keyword}" (${drop.from}위 -> ${drop.to === null ? '권외' : drop.to + '위'})`,
-      `내 글: ${post.url}`,
-      ``,
-      `## 내 글 전문`,
-      `제목: ${mine.title}`,
-      ``,
-      mine.body,
-      ``,
-      `## 현재 상위 경쟁글`,
-      ...rivals.map((r, i) => `\n### ${i + 1}위 후보: ${r.title}\n${r.url}\n${r.body}`),
-    ];
-    const outPath = path.join(FIXES_DIR, `input_${drop.keyword.replace(/\s+/g, '_')}_${today}.md`);
-    fs.writeFileSync(outPath, lines.join('\n'), 'utf-8');
-    console.log(`wrote ${outPath}`);
-    writtenFiles.push(outPath);
+  } finally {
+    await browser.close();
   }
-
-  await browser.close();
   return writtenFiles;
 }
 

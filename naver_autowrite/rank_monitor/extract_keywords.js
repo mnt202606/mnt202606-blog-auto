@@ -1,6 +1,14 @@
 const path = require('path');
 const fs = require('fs');
 
+// Returns today's date as YYYY-MM-DD in KST (UTC+9), not the system/UTC date -
+// this project's daily routine runs around 8am KST, which is still "yesterday"
+// in UTC, so a plain toISOString() would silently misdate every morning run.
+function todayKST() {
+  const kst = new Date(Date.now() + 9 * 60 * 60 * 1000);
+  return kst.toISOString().slice(0, 10);
+}
+
 const PUBLISHED_FILE = path.join(__dirname, 'published_posts.json');
 const OUT_FILE = path.join(__dirname, 'keywords.json');
 
@@ -50,7 +58,7 @@ function main() {
   }
   const published = JSON.parse(fs.readFileSync(PUBLISHED_FILE, 'utf-8'));
   const keywords = fs.existsSync(OUT_FILE) ? JSON.parse(fs.readFileSync(OUT_FILE, 'utf-8')) : {};
-  const today = new Date().toISOString().slice(0, 10);
+  const today = todayKST();
   let added = 0;
 
   for (const [topic, post] of Object.entries(published)) {
