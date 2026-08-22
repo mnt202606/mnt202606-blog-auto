@@ -13,11 +13,28 @@ const STOPWORDS = new Set([
 ]);
 
 function extractKeywords(title, max = 4) {
-  const cleaned = title.replace(/[,.!?()·⏰📈✅⚠️]/g, ' ').trim();
+  // Protect digit-comma-digit and digit-period-digit patterns before cleanup
+  // to preserve formatted numbers like 6,480 and 3.3%
+  const protectedPatterns = [];
+  let protected_title = title;
+  protected_title = protected_title.replace(/\d[,.]\d/g, (match) => {
+    const placeholder = `__PROTECTED_${protectedPatterns.length}__`;
+    protectedPatterns.push(match);
+    return placeholder;
+  });
+
+  const cleaned = protected_title.replace(/[,.!?()·⏰📈✅⚠️]/g, ' ').trim();
+
+  // Restore protected patterns
+  let restored = cleaned;
+  protectedPatterns.forEach((pattern, index) => {
+    restored = restored.replace(`__PROTECTED_${index}__`, pattern);
+  });
+
   // Split on whitespace first, then re-group into 1-2 word phrases so
   // multi-word terms like "청약통장 갈아타기" survive as one keyword
   // instead of being torn into "청약통장" and "갈아타기" separately.
-  const words = cleaned.split(/\s+/).filter((w) => w.length >= 2 && !STOPWORDS.has(w));
+  const words = restored.split(/\s+/).filter((w) => w.length >= 2 && !STOPWORDS.has(w));
   const phrases = [];
   for (let i = 0; i < words.length; i += 2) {
     const phrase = words.slice(i, i + 2).join(' ');
@@ -38,7 +55,13 @@ function main() {
 
   for (const [topic, post] of Object.entries(published)) {
     for (const kw of extractKeywords(post.title)) {
-      if (keywords[kw]) continue; // already tracked, don't reset its addedDate
+      if (keywords[kw]) {
+        // Log collision only if this keyword is tracked under a different topic
+        if (keywords[kw].topic !== topic) {
+          console.log(`collision: "${kw}" already tracked for topic "${keywords[kw].topic}", skipping for "${topic}"`);
+        }
+        continue; // already tracked, don't reset its addedDate
+      }
       keywords[kw] = { topic, addedDate: today };
       added += 1;
     }
